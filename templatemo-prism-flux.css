@@ -425,7 +425,7 @@ body::after {
   left: 50%;
   top: 50%;
   transform-style: preserve-3d;
-  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 10s cubic-bezier(0.4, 0, 0.2, 1);
   cursor: pointer;
   transform-origin: center center;
 }
