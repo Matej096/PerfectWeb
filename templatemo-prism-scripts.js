@@ -256,8 +256,84 @@ function goToSlide(index) {
 document.getElementById("nextBtn").addEventListener("click", nextSlide);
 document.getElementById("prevBtn").addEventListener("click", prevSlide);
 
-// Auto-rotate carousel
-setInterval(nextSlide, 5000);
+// Auto-rotate carousel - zaustavlja se na hover
+let autoTimer = setInterval(nextSlide, 4000); // namještam brzinu izmjene kartice
+
+const carouselContainer = document.querySelector(".carousel");
+
+carouselContainer.addEventListener("mouseenter", () => {
+  if (autoTimer) {
+    clearInterval(autoTimer);
+    autoTimer = null;
+  }
+});
+
+carouselContainer.addEventListener("mouseleave", () => {
+  if (!autoTimer) {
+    autoTimer = setInterval(nextSlide, 4000);
+  }
+});
+
+// ----- Swipe/drag za mobilne uređaje i PC -----
+let startX = 0;
+let endX = 0;
+let isDragging = false;
+
+const carouselElement = document.querySelector(".carousel");
+
+// 👉 Mobile (touch)
+carouselElement.addEventListener("touchstart", (e) => {
+  startX = e.touches[0].clientX;
+});
+
+carouselElement.addEventListener("touchmove", (e) => {
+  endX = e.touches[0].clientX;
+});
+
+carouselElement.addEventListener("touchend", () => {
+  handleSwipe();
+});
+
+// 👉 Desktop (mouse)
+carouselElement.addEventListener("mousedown", (e) => {
+  isDragging = true;
+  startX = e.clientX;
+});
+
+carouselElement.addEventListener("mousemove", (e) => {
+  if (isDragging) {
+    endX = e.clientX;
+  }
+});
+
+carouselElement.addEventListener("mouseup", () => {
+  if (isDragging) {
+    handleSwipe();
+    isDragging = false;
+  }
+});
+
+carouselElement.addEventListener("mouseleave", () => {
+  if (isDragging) {
+    handleSwipe();
+    isDragging = false;
+  }
+});
+
+// 🔧 Funkcija za detekciju smjera
+function handleSwipe() {
+  const diff = startX - endX;
+
+  if (diff > 50) {
+    nextSlide(); // lijevo
+  } else if (diff < -50) {
+    prevSlide(); // desno
+  }
+
+  // reset vrijednosti
+  startX = 0;
+  endX = 0;
+}
 
 // Keyboard navigation
 document.addEventListener("keydown", (e) => {
@@ -347,7 +423,6 @@ function updateActiveNav() {
 
 window.addEventListener("scroll", updateActiveNav);
 
-// Animated counter for stats
 function animateCounter(element) {
   const target = parseInt(element.dataset.target);
   const duration = 2000;
@@ -365,7 +440,6 @@ function animateCounter(element) {
   }, 16);
 }
 
-// Intersection Observer for stats animation
 const observerOptions = {
   threshold: 0.5,
   rootMargin: "0px 0px -100px 0px",

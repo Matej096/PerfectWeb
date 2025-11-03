@@ -421,11 +421,11 @@ body::after {
 .carousel-item {
   position: absolute;
   width: 400px;
-  height: 500px;
+  height: 520px;
   left: 50%;
   top: 50%;
   transform-style: preserve-3d;
-  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0, 8s cubic-bezier(0.4, 0, 0.2, 1);
   cursor: pointer;
   transform-origin: center center;
 }
@@ -1092,7 +1092,7 @@ body::after {
   width: 100%;
   height: 100%;
   position: relative;
-  transform: rotate(30deg);
+  /* transform: rotate(30deg); rotacija kartice */
   overflow: hidden;
   border-radius: 20px;
   background: linear-gradient(
@@ -1114,7 +1114,7 @@ body::after {
   height: 100%;
   top: 0;
   left: 0;
-  transform: rotate(-30deg);
+  /* transform: rotate(-30deg); rotacija sadržaja kartice */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -1858,4 +1858,28 @@ select::-ms-expand {
 .social-icon img {
   width: 24px;
   height: 24px;
+}
+
+/* pomicanje kartica pokazivačem */
+.carousel {
+  user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  cursor: grab;
+  touch-action: pan-y; /* dopusti vertikalni scroll na mobu */
+}
+
+.carousel.dragging {
+  cursor: grabbing;
+}
+
+.carousel img {
+  -webkit-user-drag: none; /* Safari / Chrome */
+  user-select: none; /* sprječava selekciju */
+  pointer-events: none; /* slike ne hvataju klik */
+}
+
+.carousel-container img {
+  -webkit-user-drag: none;
+  user-select: none;
 }
