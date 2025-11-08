@@ -380,6 +380,7 @@ body::after {
 .portfolio-section {
   min-height: 110vh; /*zadnja izmjena*/
   display: flex;
+  overflow: hidden;
   align-items: center;
   justify-content: center;
   position: relative;
@@ -427,6 +428,7 @@ body::after {
   transition: all 0, 8s cubic-bezier(0.4, 0, 0.2, 1);
   cursor: pointer;
   transform-origin: center center;
+  max-width: calc(100% - 40px);
 }
 
 .carousel-item .card {
