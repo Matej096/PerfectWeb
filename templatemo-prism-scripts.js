@@ -18,6 +18,7 @@ const portfolioData = [
       "Teams App je vježbovni projekt koji replicira osnovne funkcionalnosti timske suradnje i komunikacije putem moderne web aplikacije.",
     image: "images/portfolio1.png",
     tech: ["Html", "CSS", "JavaScript", "Webflow", "Design"],
+    url: "https://team-app-6c8fa1.webflow.io/",
   },
   {
     id: 2,
@@ -26,6 +27,7 @@ const portfolioData = [
       "Portfolio OPG Mlađen predstavlja jednostavan web projekt dizajniran za prikaz i promociju obiteljskog poljoprivrednog gospodarstva.",
     image: "images/portfolio2.png",
     tech: ["Html", "CSS", "JavaScript", "Webflow", "Design"],
+    url: "https://opgmladjen.netlify.app//",
   },
   {
     id: 3,
@@ -34,6 +36,7 @@ const portfolioData = [
       "Chat App je web aplikacija napravljena kao vježba za razvoj real-time komunikacije pomoću modernih web tehnologija.",
     image: "images/portfolio3.png",
     tech: ["Html", "CSS", "JavaScript", "Webflow", "Design"],
+    url: "https://chat-app-homepage-5a2f4a.webflow.io/",
   },
   {
     id: 4,
@@ -42,6 +45,7 @@ const portfolioData = [
       "Sebenico Bar je web stranica kreirana za promociju lokalnog bara, s fokusom na ponudu pića i ugodnu atmosferu.",
     image: "images/portfolio4.png",
     tech: ["Html", "CSS", "JavaScript", "Design"],
+    url: "https://sebenicobar.com/",
   },
   {
     id: 5,
@@ -50,6 +54,7 @@ const portfolioData = [
       "OPG Bakmaz je web projekt razvijen za predstavljanje i promociju obiteljskog poljoprivrednog gospodarstva Bakmaz.",
     image: "images/portfolio5.png",
     tech: ["Html", "CSS", "JavaScript", "Design"],
+    url: "https://opgbakmaz.com/",
   },
 ];
 
@@ -117,7 +122,10 @@ function createCarouselItem(data, index) {
                     <h3 class="card-title">${data.title}</h3>
                     <p class="card-description">${data.description}</p>
                     <div class="card-tech">${techBadges}</div>
-                    <button class="card-cta" onclick="scrollToSection('about')">Posjeti</button>
+                    <a class="card-cta" href="${data.url}" target="_blank" rel="noopener noreferrer">
+  Posjeti
+</a>
+
                 </div>
             `;
 
@@ -507,56 +515,57 @@ window.addEventListener("load", () => {
 const skillsData = [
   {
     name: "Dizajn web stranice",
-    icon: "🎨",
+    icon: "/images/dizajn.png",
     level: 100,
     category: "frontend",
     desc: "Dizajn web stranice u skladu s tvojim brendom — biramo boje, tipografiju i raspored elemenata kako bi stranica bila pregledna i privlačna.",
   },
   {
     name: "Izrada web stranice",
-    icon: "⚙️",
+    icon: "/images/izrada.png",
     level: 100,
     category: "frontend",
     desc: "Dizajn pretvaramo u brze web stranice koje se savršeno prilagođavaju svim uređajima, uz osnovnu SEO optimizaciju.",
   },
   {
-    name: "Dizajn objava za društvene mreže",
-    icon: "🖼️",
+    name: "Objava za društvene mreže",
+    icon: "/images/mreze.png",
     level: 100,
     category: "backend",
+    marginBottom: "-20px",
     desc: "Dizajniramo vizuale koji prate tvoj stil i ton komunikacije — objave, storyji i oglasi izgledaju skladno i prepoznatljivo na svakoj platformi.",
   },
   {
     name: "Uređivanje i optimizacija profila",
-    icon: "🪄",
+    icon: "/images/optimizacija.png",
     level: 100,
     category: "backend",
     desc: "Bio, istaknute priče, vizualna usklađenost i osnovne postavke za bolju vidljivost.",
   },
   {
     name: "Dizajn logotipa",
-    icon: "✨",
+    icon: "/images/logo.png",
     level: 100,
     category: "cloud",
     desc: "Jedinstven logotip prilagođen tvom brendu — u više verzija i formatima spremnim za svaku primjenu.",
   },
   {
     name: "Tekstovi za web stranice",
-    icon: "💻",
+    icon: "/images/copywriting.png",
     level: 100,
     category: "emerging",
     desc: "Naslovi i tekstovi koji jasno prenose poruku brenda i potiču posjetitelje na akciju.",
   },
   {
     name: "Tekstovi za društvene mreže",
-    icon: "📱",
+    icon: "/images/post.png",
     level: 100,
     category: "emerging",
     desc: "Kratke i zanimljive objave uz ton brenda i prijedloge hashtagova.",
   },
   {
     name: "Slogani i brend poruke",
-    icon: "💬",
+    icon: "/images/slogan.png",
     level: 100,
     category: "emerging",
     desc: "Jednolinijske poruke i slogani koji se pamte i prenose osobnost brenda.",
@@ -584,7 +593,7 @@ function initSkillsGrid() {
       hexagon.innerHTML = `
         <div class="hexagon-inner">
           <div class="hexagon-content">
-            <div class="skill-icon-hex">${skill.icon}</div>
+            <div class="skill-icon-hex"><img src="${skill.icon}" alt="${skill.name}" class="skill-icon-img" loading="lazy" /></div>
             <div class="skill-name-hex">${skill.name}</div>
             <div class="skill-level">
               <div class="skill-level-fill" style="width: ${skill.level}%"></div>
@@ -630,8 +639,10 @@ function openServiceModal(idx) {
   // zapamti koji je element imao fokus prije otvaranja
   lastFocusedEl = document.activeElement;
 
-  // upiši sadržaj u modal
-  modalIcon.textContent = item.icon || "✨";
+  // upiši sadržaj u modal (slika ako je path, inače emoji/tekst)
+  modalIcon.innerHTML = /\.(png|jpe?g|gif|svg|webp)$/i.test(String(item.icon))
+    ? `<img src="${item.icon}" alt="${item.name}" class="service-icon-img">`
+    : item.icon || "✨";
   modalTit.textContent = item.name;
   modalDesc.textContent = item.desc || "";
 

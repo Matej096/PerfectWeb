@@ -240,30 +240,29 @@ body::after {
 }
 
 .prism-shape {
-  width: 30px;
-  height: 30px;
-  position: relative;
-  transform: rotate(45deg);
-  background: linear-gradient(
-    135deg,
-    var(--accent-red) 0%,
-    var(--accent-blue) 33%,
-    var(--accent-green) 66%,
-    var(--accent-purple) 100%
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at center,
+    var(--accent-blue) 0%,
+    var(--accent-purple) 50%,
+    transparent 80%
   );
+
   animation: prismShine 3s ease-in-out infinite;
+  box-shadow: 0 0 8px var(--accent-blue);
 }
 
 @keyframes prismShine {
   0%,
   100% {
-    filter: brightness(1) hue-rotate(0deg);
-    transform: rotate(45deg) scale(1);
+    transform: scale(1);
+    box-shadow: 0 0 8px var(--accent-blue);
   }
-
   50% {
-    filter: brightness(1.5) hue-rotate(10deg);
-    transform: rotate(45deg) scale(1.1);
+    transform: scale(1.1);
+    box-shadow: 0 0 15px var(--accent-purple);
   }
 }
 
@@ -1124,7 +1123,7 @@ body::after {
 
 .skill-icon-hex {
   font-size: 48px;
-  margin-bottom: 15px;
+  /* margin-bottom: 15px; */
   color: var(--accent-purple);
   animation: float 3s ease-in-out infinite;
 }
@@ -1316,6 +1315,15 @@ a.info-item {
   margin-bottom: 5px;
   font-size: 16px;
   text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: all 0.3s ease;
+}
+
+.info-text-mail {
+  color: var(--text-primary);
+  margin-bottom: 5px;
+  font-size: 16px;
+
   letter-spacing: 1px;
   transition: all 0.3s ease;
 }
@@ -1882,4 +1890,36 @@ select::-ms-expand {
 .carousel-container img {
   -webkit-user-drag: none;
   user-select: none;
+}
+
+.card-cta {
+  text-decoration: none; /* makne podcrtavanje */
+  display: inline-block; /* ponaša se kao gumb */
+  background-color: #007bff; /* primjer pozadine */
+  color: #fff; /* boja teksta */
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-weight: 500;
+  transition: background-color 0.2s ease;
+}
+
+.card-cta:hover {
+  background-color: #0056b3; /* efekt na hover */
+}
+.skill-icon-img {
+  width: 50px;
+  height: 50px;
+  object-fit: contain;
+  -webkit-user-drag: none;
+  user-select: none;
+}
+
+.service-icon-img {
+  width: 56px;
+  height: 56px;
+  object-fit: contain;
+  display: inline-block;
+  vertical-align: middle;
+  user-select: none;
+  -webkit-user-drag: none;
 }
