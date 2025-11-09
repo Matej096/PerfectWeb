@@ -473,24 +473,39 @@ if (statsSection) {
 }
 
 // Form submission
-const contactForm = document.getElementById("contactForm");
-
 contactForm.addEventListener("submit", (e) => {
   e.preventDefault();
+
+  // Ukloni staru poruku o grešci ako postoji
+  const oldError = contactForm.querySelector(".form-error");
+  if (oldError) oldError.remove();
 
   // Uzimanje podataka iz forme
   const formData = new FormData(contactForm);
   const data = Object.fromEntries(formData);
 
-  // Stvaranje poruke zahvale
+  // ✅ Provjera: mora postojati barem e-mail ili mobitel
+  const email = (data.email || "").trim();
+  const phone = (data.mobitel || "").trim();
+
+  if (!email && !phone) {
+    const errorMsg = document.createElement("div");
+    errorMsg.className = "form-error";
+    errorMsg.textContent = "Unesite barem e-mail adresu ili broj mobitela.";
+    contactForm.appendChild(errorMsg);
+    errorMsg.scrollIntoView({ behavior: "smooth", block: "center" });
+    return;
+  }
+
+  // 🟢 Stvaranje poruke zahvale
   const thankYouMsg = document.createElement("div");
   thankYouMsg.className = "thank-you-message";
   thankYouMsg.innerHTML = `
-    <p>Hvala ti, <strong>${data.name}</strong>! 🎉</p>
+    <p>Hvala ti, <strong>${data.ime}</strong>! 🎉</p>
     <p>Tvoja poruka je uspješno poslana. Odgovorit ćemo u roku od 24 sata.</p>
   `;
 
-  // Ukloni formu i prikaži poruku
+  // Zamijeni formu porukom
   contactForm.replaceWith(thankYouMsg);
 });
 

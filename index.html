@@ -4,15 +4,86 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Okwisst</title>
+    <meta
+      name="description"
+      content="Okwisst kreira jedinstvena web rješenja, dizajn i brendiranje za poduzetnike koji žele moćnu i prepoznatljivu online prisutnost."
+    />
+    <meta
+      name="keywords"
+      content="Okwisst, web dizajn, izrada web stranica, logo dizajn, društvene mreže, SEO, brendiranje"
+    />
+    <meta name="author" content="Okwisst Studio" />
+
+    <!-- Open Graph / Social Media (Facebook, LinkedIn, WhatsApp...) -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://okwisst.com/" />
+    <meta
+      property="og:title"
+      content="Okwisst — Web dizajn i digitalna rješenja"
+    />
+    <meta
+      property="og:description"
+      content="Izrada web stranica, dizajn logotipa i digitalni identitet. Okwisst spaja estetiku i tehnologiju u savršeno iskustvo."
+    />
+    <meta
+      property="og:image"
+      content="https://okwisst.com/images/preview.png"
+    />
+    <meta property="og:locale" content="hr_HR" />
+
+    <!-- Twitter Card (za X/Twitter share) -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="Okwisst — Web dizajn i digitalna rješenja"
+    />
+    <meta
+      name="twitter:description"
+      content="Profesionalni web dizajn, izrada stranica i vizualni identitet brenda."
+    />
+    <meta
+      name="twitter:image"
+      content="https://okwisst.com/images/preview.png"
+    />
+
+    <!-- Faviconi -->
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="./images/favicon-32x32.png"
+    />
+
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="./images/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="96x96"
+      href="./images/favicon-96x96.png"
+    />
+    <link rel="icon" type="image/svg+xml" href="./images/favicon.svg" />
+    <link rel="shortcut icon" href="./images/favicon.ico" />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="./images/apple-touch-icon.png"
+    />
+    <meta name="apple-mobile-web-app-title" content="Okwisst" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="theme-color" content="#000000" />
+
+    <link rel="canonical" href="https://okwisst.com/" />
+    <meta name="robots" content="index, follow" />
+
+    <!-- CSS -->
     <link rel="stylesheet" href="templatemo-prism-flux.css" />
-    <!-- 
-
-TemplateMo 600 Prism Flux
-
-https://templatemo.com/tm-600-prism-flux
-
--->
   </head>
+
   <body>
     <!-- Loading Screen -->
     <div class="loader" id="loader">
@@ -327,23 +398,23 @@ https://templatemo.com/tm-600-prism-flux
 
         <form class="contact-form" id="contactForm">
           <div class="form-group">
-            <label for="name">Ime</label>
-            <input type="text" id="name" name="name" required />
+            <label for="ime">Ime</label>
+            <input type="text" id="ime" name="ime" required />
           </div>
 
           <div class="form-group">
             <label for="email">Email</label>
-            <input type="email" id="email" name="email" required />
+            <input type="email" id="email" name="email" />
           </div>
 
           <div class="form-group">
-            <label for="usluga">Broj mobitela</label>
-            <input type="text" id="subject" name="subject" required />
+            <label for="mobitel">Broj mobitela</label>
+            <input type="text" id="mobitel" name="mobitel" />
           </div>
 
           <div class="form-group">
             <label for="usluga">Odaberi uslugu:</label>
-            <select id="usluga" name="usluga">
+            <select id="usluga" name="usluga" required>
               <option value="">-- Odaberi --</option>
               <option value="web-dizajn">Dizajn web stranice</option>
               <option value="izrada">Izrada web stranice</option>
