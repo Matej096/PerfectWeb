@@ -1935,8 +1935,8 @@ select::-ms-expand {
   -webkit-user-drag: none;
 }
 .logo-image {
-  width: 50px;
-  height: 50px;
+  width: 55px;
+  height: 55px;
   display: block;
   object-fit: contain;
   user-select: none;
