@@ -239,6 +239,7 @@ body::after {
   justify-content: center;
 }
 
+/*
 .prism-shape {
   width: 40px;
   height: 40px;
@@ -283,9 +284,17 @@ body::after {
 .prism-shape::after {
   transform: rotate(-60deg);
 }
+*/
 
 .logo-text {
   font-size: 24px;
+  font-weight: 900;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.logo-text-footer {
+  font-size: 20px;
   font-weight: 900;
   letter-spacing: 2px;
   text-transform: uppercase;
@@ -1924,4 +1933,49 @@ select::-ms-expand {
   vertical-align: middle;
   user-select: none;
   -webkit-user-drag: none;
+}
+.logo-image {
+  width: 50px;
+  height: 50px;
+  display: block;
+  object-fit: contain;
+  user-select: none;
+  -webkit-user-drag: none;
+  animation: logoPulse 3s ease-in-out infinite;
+  transform-origin: center center; /* da pulsira iz sredine */
+}
+
+@keyframes logoPulse {
+  0%,
+  100% {
+    transform: scale(1);
+    filter: drop-shadow(0 0 4px rgba(153, 69, 255, 0.4));
+  }
+  50% {
+    transform: scale(1.08);
+    filter: drop-shadow(0 0 10px rgba(153, 69, 255, 0.6));
+  }
+}
+
+.thank-you-message {
+  background: var(--carbon-dark);
+  color: var(--accent-purple);
+  text-align: center;
+  padding: 30px 20px;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(153, 69, 255, 0.3);
+  animation: fadeIn 0.5s ease forwards;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

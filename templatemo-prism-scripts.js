@@ -474,20 +474,24 @@ if (statsSection) {
 
 // Form submission
 const contactForm = document.getElementById("contactForm");
+
 contactForm.addEventListener("submit", (e) => {
   e.preventDefault();
 
-  // Get form data
+  // Uzimanje podataka iz forme
   const formData = new FormData(contactForm);
   const data = Object.fromEntries(formData);
 
-  // Show success message
-  alert(
-    `Thank you ${data.name}! Your message has been transmitted successfully. We'll respond within 24 hours.`
-  );
+  // Stvaranje poruke zahvale
+  const thankYouMsg = document.createElement("div");
+  thankYouMsg.className = "thank-you-message";
+  thankYouMsg.innerHTML = `
+    <p>Hvala ti, <strong>${data.name}</strong>! 🎉</p>
+    <p>Tvoja poruka je uspješno poslana. Odgovorit ćemo u roku od 24 sata.</p>
+  `;
 
-  // Reset form
-  contactForm.reset();
+  // Ukloni formu i prikaži poruku
+  contactForm.replaceWith(thankYouMsg);
 });
 
 // Loading screen
