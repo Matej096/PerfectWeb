@@ -473,10 +473,10 @@ if (statsSection) {
 }
 
 // Form submission
-contactForm.addEventListener("submit", (e) => {
+contactForm.addEventListener("submit", async (e) => {
   e.preventDefault();
 
-  // Ukloni staru poruku o grešci ako postoji
+  // Ukloni staru poruku o grešci
   const oldError = contactForm.querySelector(".form-error");
   if (oldError) oldError.remove();
 
@@ -484,7 +484,7 @@ contactForm.addEventListener("submit", (e) => {
   const formData = new FormData(contactForm);
   const data = Object.fromEntries(formData);
 
-  // ✅ Provjera: mora postojati barem e-mail ili mobitel
+  // ✅ Mora postojati email ili mobitel
   const email = (data.email || "").trim();
   const phone = (data.mobitel || "").trim();
 
@@ -497,16 +497,31 @@ contactForm.addEventListener("submit", (e) => {
     return;
   }
 
-  // 🟢 Stvaranje poruke zahvale
-  const thankYouMsg = document.createElement("div");
-  thankYouMsg.className = "thank-you-message";
-  thankYouMsg.innerHTML = `
-    <p>Hvala ti, <strong>${data.ime}</strong>! 🎉</p>
-    <p>Tvoja poruka je uspješno poslana. Odgovorit ćemo u roku od 24 sata.</p>
-  `;
+  // 🔼 POŠALJI NA ZAPIER
+  try {
+    const resp = await fetch(contactForm.action, {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: new URLSearchParams(data).toString(),
+    });
 
-  // Zamijeni formu porukom
-  contactForm.replaceWith(thankYouMsg);
+    if (!resp.ok) throw new Error("Neuspješan odgovor sa servera.");
+
+    // 🟢 Poruka zahvale
+    const thankYouMsg = document.createElement("div");
+    thankYouMsg.className = "thank-you-message";
+    thankYouMsg.innerHTML = `
+      <p>Hvala ti, <strong>${data.ime || "posjetitelju"}</strong>! 🎉</p>
+      <p>Tvoja poruka je uspješno poslana. Odgovorit ćemo u roku od 24 sata.</p>
+    `;
+    contactForm.replaceWith(thankYouMsg);
+  } catch (err) {
+    const errorMsg = document.createElement("div");
+    errorMsg.className = "form-error";
+    errorMsg.textContent = "Došlo je do greške pri slanju. Pokušaj ponovno.";
+    contactForm.appendChild(errorMsg);
+    console.error(err);
+  }
 });
 
 // Loading screen
