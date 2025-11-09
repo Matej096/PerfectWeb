@@ -2003,3 +2003,33 @@ select::-ms-expand {
     transform: translateY(0);
   }
 }
+.hp-field {
+  position: absolute !important;
+  left: -10000px !important;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.submit-btn.sending {
+  opacity: 0.6;
+  cursor: wait;
+}
+.submit-btn.sending::after {
+  content: " …";
+  animation: dots 1s steps(3, end) infinite;
+}
+
+@keyframes dots {
+  0% {
+    content: " …";
+  }
+  33% {
+    content: " .";
+  }
+  66% {
+    content: " ..";
+  }
+  100% {
+    content: " …";
+  }
+}

@@ -473,52 +473,79 @@ if (statsSection) {
 }
 
 // Form submission
+const submitBtn = contactForm.querySelector(".submit-btn");
+
 contactForm.addEventListener("submit", async (e) => {
-  e.preventDefault();
+  e.preventDefault(); // ⛔ spriječi reload
 
-  // Ukloni staru poruku o grešci
-  const oldError = contactForm.querySelector(".form-error");
-  if (oldError) oldError.remove();
+  // makni staru grešku
+  contactForm.querySelector(".form-error")?.remove();
 
-  // Uzimanje podataka iz forme
-  const formData = new FormData(contactForm);
-  const data = Object.fromEntries(formData);
+  // 🛡️ honeypot
+  const honey = (document.getElementById("company")?.value || "").trim();
+  if (honey) return; // bot -> ništa ne radimo
 
-  // ✅ Mora postojati email ili mobitel
+  // pokupi podatke
+  const fd = new FormData(contactForm);
+  const data = Object.fromEntries(fd);
+
+  // email ili mobitel obavezno
   const email = (data.email || "").trim();
-  const phone = (data.mobitel || "").trim();
-
-  if (!email && !phone) {
-    const errorMsg = document.createElement("div");
-    errorMsg.className = "form-error";
-    errorMsg.textContent = "Unesite barem e-mail adresu ili broj mobitela.";
-    contactForm.appendChild(errorMsg);
-    errorMsg.scrollIntoView({ behavior: "smooth", block: "center" });
+  const mobitel = (data.mobitel || "").trim();
+  if (!email && !mobitel) {
+    const err = document.createElement("div");
+    err.className = "form-error";
+    err.textContent = "Unesite barem e-mail adresu ili broj mobitela.";
+    contactForm.appendChild(err);
+    err.scrollIntoView({ behavior: "smooth", block: "center" });
     return;
   }
 
+  // meta za FormSubmit
+  data._subject = "Nova poruka sa web stranice";
+  data._template = "table";
+  data._replyto = email;
+  data._captcha = "false";
+
+  // UI: gumb u “Šaljem…” stanju
+  if (submitBtn) {
+    submitBtn.disabled = true;
+    submitBtn.classList.add("sending");
+    submitBtn.textContent = "Šaljem";
+  }
+
   try {
-    // 🔥 Pošalji na FormSubmit (direktno na tvoj email)
-    await fetch("https://formsubmit.co/okwisst@gmail.com", {
+    const resp = await fetch("https://formsubmit.co/ajax/okwisst@gmail.com", {
       method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: new URLSearchParams(data).toString(),
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify(data),
     });
 
-    // 🟢 Poruka zahvale
-    const thankYouMsg = document.createElement("div");
-    thankYouMsg.className = "thank-you-message";
-    thankYouMsg.innerHTML = `
+    if (!resp.ok) throw new Error(await resp.text());
+
+    // uspjeh → prikaži “hvala”
+    const thankYou = document.createElement("div");
+    thankYou.className = "thank-you-message";
+    thankYou.innerHTML = `
       <p>Hvala ti, <strong>${data.ime || "posjetitelju"}</strong>! 🎉</p>
       <p>Tvoja poruka je uspješno poslana. Odgovorit ćemo u roku od 24 sata.</p>
     `;
-    contactForm.replaceWith(thankYouMsg);
-  } catch (err) {
-    const errorMsg = document.createElement("div");
-    errorMsg.className = "form-error";
-    errorMsg.textContent = "Došlo je do greške pri slanju. Pokušaj ponovno.";
-    contactForm.appendChild(errorMsg);
-    console.error(err);
+    contactForm.replaceWith(thankYou);
+  } catch (e2) {
+    // greška → vrati gumb i pokaži poruku
+    if (submitBtn) {
+      submitBtn.disabled = false;
+      submitBtn.classList.remove("sending");
+      submitBtn.textContent = "Pošalji poruku";
+    }
+    const err = document.createElement("div");
+    err.className = "form-error";
+    err.textContent = "Došlo je do greške pri slanju. Pokušaj ponovno.";
+    contactForm.appendChild(err);
+    console.error(e2);
   }
 });
 
