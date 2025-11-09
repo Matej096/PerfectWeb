@@ -497,15 +497,13 @@ contactForm.addEventListener("submit", async (e) => {
     return;
   }
 
-  // 🔼 POŠALJI NA ZAPIER
   try {
-    const resp = await fetch(contactForm.action, {
+    // 🔥 Pošalji na FormSubmit (direktno na tvoj email)
+    await fetch("https://formsubmit.co/okwisst@gmail.com", {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
       body: new URLSearchParams(data).toString(),
     });
-
-    if (!resp.ok) throw new Error("Neuspješan odgovor sa servera.");
 
     // 🟢 Poruka zahvale
     const thankYouMsg = document.createElement("div");
