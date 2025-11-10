@@ -1,0 +1,17 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "static/uploads" # kamo se spremaju slike u repou
+public_folder: "/uploads" # javni URL do tih slika
+
+collections:
+  - name: "site"
+    label: "Site Content"
+    files:
+      - label: "Naslovnica"
+        name: "home"
+        file: "data/home.json"
+        fields:
+          - { label: "Hero naslov", name: "heroTitle", widget: "string" }
+          - { label: "Hero tekst", name: "heroText", widget: "text" }

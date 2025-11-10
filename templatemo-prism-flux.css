@@ -2033,3 +2033,7 @@ select::-ms-expand {
     content: " …";
   }
 }
+
+.philosophy-headline {
+  white-space: pre-line;
+}
