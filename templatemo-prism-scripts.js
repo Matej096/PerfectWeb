@@ -745,11 +745,3 @@ document.addEventListener("keydown", (e) => {
 initCarousel();
 initSkillsGrid();
 initParticles();
-
-fetch("/data/home.json")
-  .then((r) => r.json())
-  .then((d) => {
-    document.querySelector("[data-hero-title]").textContent = d.heroTitle;
-    document.querySelector("[data-hero-text]").textContent = d.heroText;
-  })
-  .catch(console.error);
